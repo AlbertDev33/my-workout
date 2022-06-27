@@ -14,6 +14,9 @@ export class User extends BaseEntity {
   @Column()
   email: string;
 
+  @Column()
+  token: string;
+
   @OneToMany(() => Workout, (workout) => workout.user)
   workout: Workout[];
 
