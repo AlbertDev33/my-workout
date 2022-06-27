@@ -14,12 +14,12 @@ import { Workout } from './workout.entity';
 @Entity('muscle_group')
 export class MuscleGroup extends BaseEntity {
   @PrimaryColumn()
-  id: string;
+  id?: string;
 
   @Column()
   name: string;
 
-  @Column()
+  @Column({ name: 'exercise_name' })
   exerciseName: string;
 
   @Column()
@@ -27,6 +27,9 @@ export class MuscleGroup extends BaseEntity {
 
   @Column()
   repetition: number;
+
+  @Column({ type: 'string', nullable: true })
+  technique?: string;
 
   @Column({ name: 'load_weight' })
   loadWeight: number;
