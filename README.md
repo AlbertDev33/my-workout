@@ -2,6 +2,7 @@ Entidades:
   - **User**:
     - name
     - email
+    - token
 
   - **Workout**:
     - date
@@ -12,5 +13,6 @@ Entidades:
   - **MuscleGroup**:
     - name
     - exerciseName
+    - technique
     - series
     - loadWeight
