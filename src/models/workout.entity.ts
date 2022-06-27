@@ -18,12 +18,12 @@ import { User } from './user.entity';
 @Entity('workout')
 export class Workout extends BaseEntity {
   @PrimaryColumn()
-  id: string;
+  id?: string;
 
   @Column()
   date: string;
 
-  @Column()
+  @Column({ name: 'workout_time' })
   workoutTime: string;
 
   @ManyToOne(() => User)
