@@ -1,4 +1,12 @@
-import { BaseEntity, Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
+import {
+  BaseEntity,
+  Column,
+  CreateDateColumn,
+  Entity,
+  OneToMany,
+  PrimaryColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 import { v4 } from 'uuid';
 
 import { Workout } from './workout.entity';
@@ -14,11 +22,17 @@ export class User extends BaseEntity {
   @Column()
   email: string;
 
-  @Column()
-  token: string;
+  @Column({ name: 'sms_token' })
+  smsToken: string;
 
   @OneToMany(() => Workout, (workout) => workout.user)
   workout: Workout[];
+
+  @CreateDateColumn()
+  created_at: Date;
+
+  @UpdateDateColumn()
+  updated_at: Date;
 
   constructor() {
     super();
