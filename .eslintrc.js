@@ -22,36 +22,5 @@ module.exports = {
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
     'no-param-reassign': ['error', { 'props': false }],
-    'import/extensions': [
-        'error',
-        'ignorePackages',
-        {
-            'ts': 'never'
-        }
-    ],
-    'import-helpers/order-imports': [
-        'warn',
-        {
-            newlinesBetween: 'always',
-            groups: [
-                'module',
-                '/^@/',
-                [
-                    'parent',
-                    'sibling',
-                    'index'
-                ]
-            ],
-            alphabetize: {
-                'order': 'asc',
-                'ignoreCase': true
-            }
-        }
-    ],
-    settings: {
-        'import/resolver': {
-            'typescript': {}
-        }
-    },
   },
 };
