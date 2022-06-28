@@ -1,4 +1,4 @@
-import { UsersModule } from '@modules/users/users.module';
+import { UserModule } from '@modules/user/user.module';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -13,7 +13,7 @@ import { AppService } from './app.service';
       isGlobal: true,
     }),
     TypeOrmModule.forRootAsync(typeOrmAsyncConfig),
-    UsersModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService],
