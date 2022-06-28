@@ -28,21 +28,24 @@ export class MuscleGroup extends BaseEntity {
   @Column()
   repetition: number;
 
-  @Column({ type: 'string', nullable: true })
+  @Column({ nullable: true })
   technique?: string;
 
   @Column({ name: 'load_weight' })
   loadWeight: number;
 
-  @ManyToOne(() => Workout, (workout) => workout.muscleGroup)
+  @ManyToOne(() => Workout)
   @JoinColumn({ name: 'workout_id' })
   workout: Workout;
 
-  @CreateDateColumn({ name: 'created_at' })
-  createdAt: Date;
+  @Column({ name: 'workout_id' })
+  workoutId: string;
 
-  @UpdateDateColumn({ name: 'updated_at' })
-  updatedAt: Date;
+  @CreateDateColumn({ type: 'time without time zone' })
+  created_at: Date;
+
+  @UpdateDateColumn({ type: 'time without time zone' })
+  updated_at: Date;
 
   constructor() {
     super();

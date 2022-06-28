@@ -28,10 +28,10 @@ export class User extends BaseEntity {
   @OneToMany(() => Workout, (workout) => workout.user)
   workout: Workout[];
 
-  @CreateDateColumn()
+  @CreateDateColumn({ type: 'time without time zone' })
   created_at: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({ type: 'time without time zone' })
   updated_at: Date;
 
   constructor() {

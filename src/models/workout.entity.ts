@@ -20,8 +20,8 @@ export class Workout extends BaseEntity {
   @PrimaryColumn()
   id?: string;
 
-  @Column()
-  date: string;
+  @Column({ type: 'time without time zone' })
+  date: Date;
 
   @Column({ name: 'workout_time' })
   workoutTime: string;
@@ -30,14 +30,16 @@ export class Workout extends BaseEntity {
   @JoinColumn({ name: 'user_id' })
   user: User;
 
+  @Column({ name: 'user_id' })
+  userId: string;
+
   @OneToMany(() => MuscleGroup, (muscleGroup) => muscleGroup.workout)
-  @JoinColumn({ name: 'muscle_group_id' })
   muscleGroup: MuscleGroup[];
 
-  @CreateDateColumn()
+  @CreateDateColumn({ type: 'time without time zone' })
   created_at: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({ type: 'time without time zone' })
   updated_at: Date;
 
   constructor() {
