@@ -23,6 +23,9 @@
       ],
       "@modules/*": [
         "modules/*"
+      ],
+      "@constants/*": [
+        "constants/*"
       ]
     }
   }
