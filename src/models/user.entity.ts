@@ -11,7 +11,7 @@ import { v4 } from 'uuid';
 
 import { Workout } from './workout.entity';
 
-@Entity('user')
+@Entity('users')
 export class User extends BaseEntity {
   @PrimaryColumn()
   id?: string;

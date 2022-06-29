@@ -4,13 +4,12 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { CreateUserRequest } from 'interfaces/CreateUserRequest';
 import { ICreateUserService } from 'interfaces/ICreateUserService';
 import { IUserRepository } from 'interfaces/IUserRepository';
-import { UserRepository } from './user.repository';
 
 @Injectable()
 export class CreateUserService implements ICreateUserService {
   constructor(
     @InjectRepository(User)
-    private userRepository: UserRepository,
+    private userRepository: IUserRepository,
   ) {}
 
   public async execute(user: CreateUserRequest): Promise<User> {

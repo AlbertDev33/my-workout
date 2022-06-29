@@ -37,7 +37,7 @@ export class createWorkout1656424762191 implements MigrationInterface {
         foreignKeys: [
           {
             name: 'FKWorkout',
-            referencedTableName: 'user',
+            referencedTableName: 'users',
             referencedColumnNames: ['id'],
             columnNames: ['user_id'],
             onDelete: 'SET NULL',

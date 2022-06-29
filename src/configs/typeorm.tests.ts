@@ -1,51 +1,50 @@
-import { getConnection, createConnection } from 'typeorm';
-import { createDatabase, dropDatabase } from 'typeorm-extension';
+import { DataSource } from 'typeorm';
+import {
+  createDatabase,
+  dropDatabase,
+  DatabaseCreateContext,
+} from 'typeorm-extension';
+
+const connectionConfig: DatabaseCreateContext = {
+  options: {
+    name: 'default',
+    type: 'postgres',
+    host: 'localhost',
+    port: 5432,
+    username: 'postgres',
+    password: 'postgres',
+    database: 'tests',
+    dropSchema: true,
+    logging: false,
+    synchronize: true,
+    migrationsRun: true,
+    entities: [
+      __dirname + '/../**/*.entity{.ts,.js}',
+      __dirname + '../../dist/src/**/*entity{.ts,.js}',
+    ],
+    migrations: [__dirname + '/../migrations/*{.ts,.js}'],
+  },
+};
+
+const dataSource = new DataSource(connectionConfig.options);
 
 export const connection = {
   crateDatabase: async () => {
-    const config = {
-      name: 'default',
-      type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'postgres',
-      password: 'postgres',
-      database: 'tests',
-      dropSchema: true,
-      logging: false,
-      synchronize: true,
-      migrationsRun: true,
-      entities: [
-        __dirname + '/../**/*.entity{.ts,.js}',
-        __dirname + '../../dist/src/**/*entity{.ts,.js}',
-      ],
-      migrations: [__dirname + '/../migrations/*{.ts,.js}'],
-    };
     await createDatabase({
       ifNotExist: true,
-      options: config,
+      options: connectionConfig.options,
     });
   },
   createConnection: async () => {
-    await createConnection();
-    const connection = getConnection();
-    return connection;
+    await dataSource.initialize();
+  },
+  repository: () => {
+    return dataSource;
   },
   close: async () => {
-    await getConnection().close();
-  },
-  clear: async () => {
-    const connection = getConnection();
-    const entities = connection.entityMetadatas;
-
-    const clearConnection = entities.map(async (entity) => {
-      const repository = connection.getRepository(entity.name);
-      await repository.query(`DELETE FROM ${entity.tableName}`);
-    });
-
-    await Promise.all(clearConnection);
+    await dataSource.destroy();
   },
   drop: async () => {
-    await dropDatabase({ ifExist: true });
+    await dropDatabase({ ifExist: true, options: connectionConfig.options });
   },
 };
