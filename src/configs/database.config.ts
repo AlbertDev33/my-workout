@@ -1,5 +1,5 @@
 import { DATABASE_TYPE } from '../constants';
-import { ConfigModule, ConfigService, registerAs } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import {
   TypeOrmModuleOptions,
   TypeOrmModuleAsyncOptions,
@@ -21,24 +21,24 @@ export interface IDatabaseConfig {
   logging: boolean;
 }
 
-export const databaseConfig = registerAs(
-  'database',
-  (): IDatabaseConfig => ({
-    type: process.env.DB_TYPE || 'postgres',
-    host: process.env.DB_HOST,
-    port: Number(process.env.DB_PORT),
-    username: process.env.DB_USER_NAME,
-    password: process.env.DB_USER_PASS,
-    database: process.env.DB_NAME,
-    entities: ['../models/**/*.entity{.ts,.js}'],
-    migrations: ['../migrations/*{.ts,.js}'],
-    cli: {
-      migrationsDir: '../migrations/',
-    },
-    synchronize: true,
-    logging: true,
-  }),
-);
+// export const typeOrmAsyncConfig = registerAs(
+//   'database',
+//   (): IDatabaseConfig => ({
+//     type: DATABASE_TYPE,
+//     host: process.env.DB_HOST,
+//     port: Number(process.env.DB_PORT),
+//     username: process.env.DB_USER_NAME,
+//     password: process.env.DB_USER_PASS,
+//     database: process.env.DB_NAME,
+//     entities: [__dirname + '/../**/*.entity{.ts,.js}'],
+//     migrations: [__dirname + '/../migrations/*{.ts,.js}'],
+//     cli: {
+//       migrationsDir: __dirname + '/../migrations',
+//     },
+//     synchronize: false,
+//     logging: false,
+//   }),
+// );
 
 export const typeOrmAsyncConfig: TypeOrmModuleAsyncOptions = {
   imports: [ConfigModule],
@@ -53,7 +53,6 @@ export const typeOrmAsyncConfig: TypeOrmModuleAsyncOptions = {
       database: process.env.DB_NAME,
       entities: [__dirname + '/../**/*.entity{.ts,.js}'],
       migrations: [__dirname + '/../migrations/*{.ts,.js}'],
-      extra: 'utf8mb4_unicode_ci',
       synchronize: false,
       logging: false,
     };
@@ -67,12 +66,11 @@ export const typeOrmConfig: TypeOrmModuleOptions = {
   username: process.env.DB_USER_NAME,
   password: process.env.DB_USER_PASS,
   database: process.env.DB_NAME,
+  dropSchema: true,
+  migrationsRun: true,
   entities: [__dirname + '/../**/*.entity{.ts,.js}'],
   migrations: [__dirname + '/../migrations/*{.ts,.js}'],
   extra: 'utf8mb4_unicode_ci',
-  cli: {
-    migrationsDir: __dirname + '/../migrations',
-  },
   synchronize: false,
   logging: true,
 };

@@ -22,7 +22,10 @@ export class User extends BaseEntity {
   @Column()
   email: string;
 
-  @Column({ name: 'sms_token' })
+  @Column({ name: 'phone_number' })
+  phoneNumber: string;
+
+  @Column({ name: 'sms_token', nullable: true })
   smsToken: string;
 
   @OneToMany(() => Workout, (workout) => workout.user)

@@ -20,8 +20,13 @@ export class Users1656355911833 implements MigrationInterface {
             type: 'varchar',
           },
           {
+            name: 'phone_number',
+            type: 'varchar',
+          },
+          {
             name: 'sms_token',
             type: 'varchar',
+            isNullable: true,
           },
           {
             name: 'created_at',

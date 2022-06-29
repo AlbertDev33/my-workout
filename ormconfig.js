@@ -1,0 +1,15 @@
+module.exports = {
+  name: 'default',
+  type: 'postgres',
+  host: 'localhost',
+  port: 5432,
+  username: 'postgres',
+  password: 'postgres',
+  database: 'tests',
+  dropSchema: true,
+  logging: false,
+  synchronize: true,
+  migrationsRun: true,
+  entities: [__dirname + '/**/*.entity{.ts,.js}'],
+  migrations: [__dirname + '/migrations/*{.ts,.js}'],
+};

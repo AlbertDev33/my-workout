@@ -17,6 +17,7 @@
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
+    "resolveJsonModule": true,
     "paths": {
       "@models/*": [
         "models/*"
@@ -26,6 +27,9 @@
       ],
       "@constants/*": [
         "constants/*"
+      ],
+      "@configs/*": [
+        "configs/*"
       ]
     }
   }
