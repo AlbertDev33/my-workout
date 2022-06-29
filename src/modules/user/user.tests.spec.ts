@@ -46,6 +46,6 @@ describe('User Repository', () => {
     };
 
     const createdUser = await stub.execute(user);
-    console.log(createdUser);
+    expect(createdUser).toHaveProperty('id');
   });
 });
