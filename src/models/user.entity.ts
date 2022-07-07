@@ -3,6 +3,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  Generated,
   OneToMany,
   PrimaryColumn,
   UpdateDateColumn,
@@ -22,11 +23,21 @@ export class User extends BaseEntity {
   @Column()
   email: string;
 
+  @Column({ name: 'confirmed_email', nullable: true })
+  confirmedEmail: boolean;
+
+  @Column({ name: 'confirmed_phone', nullable: true })
+  confirmedPhone: boolean;
+
   @Column({ name: 'phone_number' })
   phoneNumber: string;
 
   @Column({ name: 'sms_token', nullable: true })
   smsToken: string;
+
+  @Column({ name: 'user_token' })
+  @Generated('uuid')
+  userToken: string;
 
   @OneToMany(() => Workout, (workout) => workout.user)
   workout: Workout[];

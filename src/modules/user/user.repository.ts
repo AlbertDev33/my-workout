@@ -1,16 +1,17 @@
 import { User } from '@models/user.entity';
 import { Workout } from '@models/workout.entity';
-import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
 import { CreateUserRequest } from 'interfaces/CreateUserRequest';
 import { IUserRepository } from 'interfaces/IUserRepository';
 import { Repository } from 'typeorm';
+
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class UserRepository implements IUserRepository {
   constructor(
     @InjectRepository(User)
-    private userRepository: Repository<User>,
+    private readonly userRepository: Repository<User>,
   ) {}
   public async create(user: CreateUserRequest): Promise<User> {
     const register = this.userRepository.create(user);
@@ -18,7 +19,7 @@ export class UserRepository implements IUserRepository {
     return createdUser;
   }
 
-  public async get(id: string): Promise<User> {
+  public async getUser(id: string): Promise<User> {
     throw new Error('Method not implemented.');
   }
 
@@ -26,7 +27,8 @@ export class UserRepository implements IUserRepository {
     throw new Error('Method not implemented.');
   }
 
-  public async findByEmail(email: string): Promise<User> {
-    throw new Error('Method not implemented.');
+  public async findByEmail(email: string): Promise<User | undefined> {
+    const user = await this.userRepository.findOne({ where: [{ email }] });
+    return user;
   }
 }

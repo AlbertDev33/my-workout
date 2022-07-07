@@ -31,10 +31,11 @@ export const typeOrmAsyncConfig: TypeOrmModuleAsyncOptions = {
       username: process.env.TYPEORM_DB_USER_NAME,
       password: process.env.TYPEORM_DB_USER_PASS,
       database: process.env.TYPEORM_DB_NAME,
-      migrationsRun: true,
+      migrationsRun: false,
       entities: [__dirname + '/../**/*.entity{.ts,.js}'],
       migrations: [__dirname + '/../migrations/*{.ts,.js}'],
-      synchronize: true,
+      synchronize: false,
+      logging: false,
     };
   },
 };

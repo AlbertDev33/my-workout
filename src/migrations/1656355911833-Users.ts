@@ -20,8 +20,24 @@ export class Users1656355911833 implements MigrationInterface {
             type: 'varchar',
           },
           {
+            name: 'confirmed_email',
+            type: 'boolean',
+            isNullable: true,
+          },
+          {
+            name: 'confirmed_phone',
+            type: 'boolean',
+            isNullable: true,
+          },
+          {
             name: 'phone_number',
             type: 'varchar',
+          },
+          {
+            name: 'user_token',
+            type: 'uuid',
+            generationStrategy: 'uuid',
+            isGenerated: true,
           },
           {
             name: 'sms_token',
