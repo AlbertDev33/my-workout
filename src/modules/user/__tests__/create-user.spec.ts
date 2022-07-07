@@ -1,5 +1,4 @@
 import { connection } from '@configs/typeorm.tests';
-import { CreateUserRequest } from '@interfaces/CreateUserRequest';
 import { ICreateUserService } from '@interfaces/ICreateUserService';
 import { User } from '@models/user.entity';
 import { SendMailService } from '@modules/email/sendMail.service';
