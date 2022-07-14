@@ -18,6 +18,7 @@ export class Users1656355911833 implements MigrationInterface {
           {
             name: 'email',
             type: 'varchar',
+            isUnique: true,
           },
           {
             name: 'confirmed_email',
