@@ -10,7 +10,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
-import { MigrationsConfigModule } from './typeOrmMigrationConfig/email.module';
 
 @Module({
   imports: [
@@ -23,7 +22,6 @@ import { MigrationsConfigModule } from './typeOrmMigrationConfig/email.module';
     MailConfigModule,
     EmailModule,
     AuthModule,
-    MigrationsConfigModule,
   ],
   controllers: [AppController],
   providers: [AppService],
