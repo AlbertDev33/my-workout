@@ -4,22 +4,6 @@ import {
   TypeOrmModuleAsyncOptions,
 } from '@nestjs/typeorm';
 
-export interface IDatabaseConfig {
-  type: string;
-  host: string;
-  port: number;
-  username: string;
-  password: string;
-  database: string;
-  entities: string[];
-  migrations: string[];
-  cli: {
-    migrationsDir: string;
-  };
-  synchronize: boolean;
-  logging: boolean;
-}
-
 export const typeOrmAsyncConfig: TypeOrmModuleAsyncOptions = {
   imports: [ConfigModule],
   inject: [ConfigService],

@@ -10,17 +10,20 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
+import { MigrationsConfigModule } from './typeOrmMigrationConfig/email.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
+      cache: true,
     }),
     TypeOrmModule.forRootAsync(typeOrmAsyncConfig),
     UserModule,
     MailConfigModule,
     EmailModule,
     AuthModule,
+    MigrationsConfigModule,
   ],
   controllers: [AppController],
   providers: [AppService],
