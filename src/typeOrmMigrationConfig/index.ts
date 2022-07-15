@@ -2,9 +2,9 @@ import { config } from 'dotenv';
 import { DataSource, DataSourceOptions } from 'typeorm';
 config();
 
-type IDataSource = Pick<DataSource, 'options'>;
+type DataSourceCustomType = Pick<DataSource, 'options'>;
 
-const connectionConfig: IDataSource = {
+const connectionConfig: DataSourceCustomType = {
   options: {
     type: 'postgres',
     host: process.env.TYPEORM_DB_HOST,

@@ -25,16 +25,16 @@ export class CreateUserService implements ICreateUserService {
 
     const createdUser = await this.userRepository.create(user);
 
-    await this.sendMailService.execute({
-      from: process.env.MAIL_FROM,
-      to: createdUser.email,
-      subject: process.env.USER_CREATE_MAIL_SUBJECT,
-      template: process.env.USER_CREATE_MAIL_TEMPLATE,
-      'h:X-Mailgun-Variables': {
-        name: createdUser.name,
-        link: createdUser.userToken,
-      },
-    });
+    // await this.sendMailService.execute({
+    //   from: process.env.MAIL_FROM,
+    //   to: createdUser.email,
+    //   subject: process.env.USER_CREATE_MAIL_SUBJECT,
+    //   template: process.env.USER_CREATE_MAIL_TEMPLATE,
+    //   'h:X-Mailgun-Variables': {
+    //     name: createdUser.name,
+    //     link: createdUser.userToken,
+    //   },
+    // });
     return createdUser;
   }
 }
