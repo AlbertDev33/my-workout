@@ -4,8 +4,6 @@ import { Workout } from '@models/workout.entity';
 import { CreateUserRequest } from 'interfaces/CreateUserRequest';
 import { IUserRepository } from 'interfaces/IUserRepository';
 import { Repository, UpdateResult } from 'typeorm';
-import { FindOptionsWhere } from 'typeorm/browser';
-import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity.js';
 
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';

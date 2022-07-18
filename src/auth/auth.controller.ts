@@ -1,6 +1,16 @@
 import { Tokens } from '@customTypes/tokens.type';
+import { Request } from 'express';
 
-import { Controller, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  HttpCode,
+  HttpStatus,
+  Post,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 
 import { AuthService } from './auth.service';
 
@@ -9,16 +19,26 @@ export class AuthController {
   constructor(private authService: AuthService) {}
 
   @Post('signin')
-  public async signin(smsToken: string, email: string): Promise<Tokens> {
+  @HttpCode(HttpStatus.OK)
+  public async signin(
+    @Body() smsToken: string,
+    email: string,
+  ): Promise<Tokens> {
     return this.authService.signin(smsToken, email);
   }
 
+  @UseGuards(AuthGuard(process.env.ACCESS_TOKEN_STRATEGY_NAME))
   @Post('logout')
-  public async logout() {
-    this.authService.logout();
+  @HttpCode(HttpStatus.OK)
+  public async logout(@Req() req: Request) {
+    const { payload } = req;
+
+    await this.authService.logout(payload.sub);
   }
 
+  @UseGuards(AuthGuard(process.env.REFRESH_TOKEN_STRATEGY_NAME))
   @Post('refresh-token')
+  @HttpCode(HttpStatus.OK)
   public async refreshTokens() {
     this.authService.refreshTokens();
   }

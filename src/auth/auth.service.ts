@@ -1,6 +1,7 @@
 import { InjectDependencies } from '@constants/index';
 import { Tokens } from '@customTypes/tokens.type';
 import { EAccessDenied } from '@enums/EAccessDenied';
+import { EInvalidUser } from '@enums/EInvalidUser';
 import { IAuthService } from '@interfaces/IAuthService';
 import { IUserRepository } from '@interfaces/IUserRepository';
 import { hash } from 'bcrypt';
@@ -39,8 +40,17 @@ export class AuthService implements IAuthService {
       refreshToken,
     };
   }
-  public async logout(): Promise<void> {
-    throw new Error('Method not implemented.');
+  public async logout(userId: string): Promise<void> {
+    const user = await this.userRepository.getUser(userId);
+
+    if (!user) throw new ForbiddenException(EInvalidUser.MESSAGE_ERROR);
+
+    const data = {
+      userId: user.id,
+      hashToken: '',
+    };
+
+    await this.userRepository.updateUser(data);
   }
   public async refreshTokens(): Promise<void> {
     throw new Error('Method not implemented.');
