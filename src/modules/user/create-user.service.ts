@@ -1,9 +1,9 @@
 import { ErrorMessage, InjectTokens } from '@constants/index';
+import { Tokens } from '@customTypes/index';
 import { CreateUserRequest } from '@interfaces/CreateUserRequest';
 import { ICreateUserService } from '@interfaces/ICreateUserService';
 import { ISendMailService } from '@interfaces/ISendMail';
 import { IUserRepository } from '@interfaces/IUserRepository';
-import { User } from '@models/user.entity';
 
 import { Inject, Injectable } from '@nestjs/common';
 
@@ -16,7 +16,7 @@ export class CreateUserService implements ICreateUserService {
     private readonly sendMailService: ISendMailService,
   ) {}
 
-  public async execute(user: CreateUserRequest): Promise<User> {
+  public async execute(user: CreateUserRequest): Promise<Tokens> {
     const isRegisteredUser = await this.userRepository.findByEmail(user.email);
 
     if (isRegisteredUser) {
@@ -35,6 +35,9 @@ export class CreateUserService implements ICreateUserService {
     //     link: createdUser.userToken,
     //   },
     // });
-    return createdUser;
+    return {
+      accessToken: '',
+      refreshToken: '',
+    };
   }
 }

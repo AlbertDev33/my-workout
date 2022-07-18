@@ -5,7 +5,7 @@ import {
   IsString,
   Length,
 } from 'class-validator';
-import { EPhoneConfiguration } from 'enums/index';
+import { EPhoneConfiguration } from 'enums/EPhoneConfiguration';
 
 export class CreateUserRequest {
   @IsNotEmpty()

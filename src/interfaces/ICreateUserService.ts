@@ -1,7 +1,7 @@
-import { User } from '@models/user.entity';
+import { Tokens } from '@customTypes/index';
 
 import { CreateUserRequest } from './CreateUserRequest';
 
 export interface ICreateUserService {
-  execute(user: CreateUserRequest): Promise<User>;
+  execute(user: CreateUserRequest): Promise<Tokens>;
 }

@@ -1,4 +1,5 @@
 import { InjectTokens } from '@constants/index';
+import { Tokens } from '@customTypes/index';
 import { CreateUserRequest } from '@interfaces/CreateUserRequest';
 import { ICreateUserService } from '@interfaces/ICreateUserService';
 
@@ -12,7 +13,7 @@ export class UserController {
   ) {}
 
   @Post()
-  async createUser(@Body() body: CreateUserRequest) {
-    return await this.createUserService.execute(body);
+  async createUser(@Body() body: CreateUserRequest): Promise<Tokens> {
+    return this.createUserService.execute(body);
   }
 }
