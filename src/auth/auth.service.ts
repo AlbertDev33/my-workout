@@ -1,13 +1,15 @@
 import { Tokens } from '@customTypes/tokens.type';
 import { IAuthService } from '@interfaces/IAuthService';
+import { hash } from 'bcrypt';
 
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService implements IAuthService {
-  constructor(private jwtService: JwtService) {}
+  private readonly HASH_SALT = 10;
 
+  constructor(private jwtService: JwtService) {}
   public async signin(): Promise<void> {
     throw new Error('Method not implemented.');
   }
@@ -46,5 +48,15 @@ export class AuthService implements IAuthService {
       accessToken,
       refreshToken,
     };
+  }
+
+  private async hashData(data: string): Promise<string> {
+    const hashedData = await hash(data, this.HASH_SALT);
+    return hashedData;
+  }
+
+  public async updateRefreshToken(refreshToken: string): Promise<string> {
+    const hashedData = await this.hashData(refreshToken);
+    return hashedData;
   }
 }

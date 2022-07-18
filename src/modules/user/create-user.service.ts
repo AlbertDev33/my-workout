@@ -31,6 +31,7 @@ export class CreateUserService implements ICreateUserService {
       createdUser.id,
       createdUser.email,
     );
+    await this.authService.updateRefreshToken(refreshToken);
 
     // await this.sendMailService.execute({
     //   from: process.env.MAIL_FROM,
