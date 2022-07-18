@@ -1,8 +1,11 @@
+import { UpdateUserData } from '@interfaces/IUpdateUserData';
 import { User } from '@models/user.entity';
 import { Workout } from '@models/workout.entity';
 import { CreateUserRequest } from 'interfaces/CreateUserRequest';
 import { IUserRepository } from 'interfaces/IUserRepository';
-import { Repository } from 'typeorm';
+import { Repository, UpdateResult } from 'typeorm';
+import { FindOptionsWhere } from 'typeorm/browser';
+import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity.js';
 
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -29,6 +32,22 @@ export class UserRepository implements IUserRepository {
 
   public async findByEmail(email: string): Promise<User | undefined> {
     const user = await this.userRepository.findOne({ where: [{ email }] });
+    return user;
+  }
+
+  public async findBySmsToken(smsToken: string, email: string): Promise<User> {
+    const user = await this.userRepository.findOne({
+      where: [{ smsToken, email }],
+    });
+    return user;
+  }
+
+  public async updateUser(
+    data: Partial<UpdateUserData>,
+  ): Promise<UpdateResult> {
+    data.updatedAt = new Date();
+
+    const user = await this.userRepository.update(data.userId, { ...data });
     return user;
   }
 }

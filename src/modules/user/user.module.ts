@@ -27,6 +27,6 @@ import { UserRepository } from './user.repository';
     { provide: InjectDependencies.AuthService, useClass: AuthService },
   ],
   controllers: [UserController],
-  exports: [CreateUserService],
+  exports: [CreateUserService, TypeOrmModule],
 })
 export class UserModule {}

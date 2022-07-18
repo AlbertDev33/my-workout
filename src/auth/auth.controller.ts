@@ -1,3 +1,5 @@
+import { Tokens } from '@customTypes/tokens.type';
+
 import { Controller, Post } from '@nestjs/common';
 
 import { AuthService } from './auth.service';
@@ -7,8 +9,8 @@ export class AuthController {
   constructor(private authService: AuthService) {}
 
   @Post('signin')
-  public async signin() {
-    this.authService.signin();
+  public async signin(smsToken: string, email: string): Promise<Tokens> {
+    return this.authService.signin(smsToken, email);
   }
 
   @Post('logout')

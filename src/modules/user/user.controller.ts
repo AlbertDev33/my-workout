@@ -13,7 +13,7 @@ export class UserController {
   ) {}
 
   @Post()
-  async createUser(@Body() body: CreateUserRequest): Promise<Tokens> {
+  public async createUser(@Body() body: CreateUserRequest): Promise<Tokens> {
     return this.createUserService.execute(body);
   }
 }
