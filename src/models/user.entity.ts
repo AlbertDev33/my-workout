@@ -39,6 +39,9 @@ export class User extends BaseEntity {
   @Generated('uuid')
   userToken: string;
 
+  @Column({ name: 'hash_token', nullable: true })
+  hashToken: string;
+
   @OneToMany(() => Workout, (workout) => workout.user)
   workout: Workout[];
 
