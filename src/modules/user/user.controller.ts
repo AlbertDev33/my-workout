@@ -1,4 +1,4 @@
-import { InjectTokens } from '@constants/index';
+import { InjectDependencies } from '@constants/index';
 import { Tokens } from '@customTypes/index';
 import { CreateUserRequest } from '@interfaces/CreateUserRequest';
 import { ICreateUserService } from '@interfaces/ICreateUserService';
@@ -8,7 +8,7 @@ import { Body, Controller, Inject, Post, Req } from '@nestjs/common';
 @Controller('users')
 export class UserController {
   constructor(
-    @Inject(InjectTokens.CreateUserService)
+    @Inject(InjectDependencies.CreateUserService)
     private createUserService: ICreateUserService,
   ) {}
 

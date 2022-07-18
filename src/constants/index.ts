@@ -1,9 +1,10 @@
 export const DATABASE_TYPE = 'postgres';
 
-export enum InjectTokens {
+export enum InjectDependencies {
   SendMailService = 'ISendMailService',
   CreateUserService = 'ICreateUserService',
   UserRepository = 'IUserRepository',
+  AuthService = 'IAuthService',
 }
 
 export enum ErrorMessage {

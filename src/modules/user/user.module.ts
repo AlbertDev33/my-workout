@@ -1,13 +1,14 @@
-import { InjectTokens } from '@constants/index';
+import { InjectDependencies } from '@constants/index';
 import { User } from '@models/user.entity';
 import { EmailModule } from '@modules/email/email.module';
 import { SendMailService } from '@modules/email/sendMail.service';
 import { MailConfigModule } from '@modules/mailConfig/mail.module';
+import { AuthService } from 'auth/auth.service';
 
 import { Module } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { AssertRequestService } from './assert-request.service';
 import { CreateUserService } from './create-user.service';
 import { UserController } from './user.controller';
 import { UserRepository } from './user.repository';
@@ -16,10 +17,14 @@ import { UserRepository } from './user.repository';
   imports: [TypeOrmModule.forFeature([User]), EmailModule, MailConfigModule],
   providers: [
     CreateUserService,
-    { provide: InjectTokens.UserRepository, useClass: UserRepository },
-    { provide: InjectTokens.CreateUserService, useClass: CreateUserService },
-    { provide: InjectTokens.SendMailService, useClass: SendMailService },
-    AssertRequestService,
+    JwtService,
+    { provide: InjectDependencies.UserRepository, useClass: UserRepository },
+    {
+      provide: InjectDependencies.CreateUserService,
+      useClass: CreateUserService,
+    },
+    { provide: InjectDependencies.SendMailService, useClass: SendMailService },
+    { provide: InjectDependencies.AuthService, useClass: AuthService },
   ],
   controllers: [UserController],
   exports: [CreateUserService],
