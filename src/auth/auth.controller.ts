@@ -1,4 +1,4 @@
-import { Tokens } from '@customTypes/tokens.type';
+import { Tokens } from '@customTypes/index';
 import { Request } from 'express';
 
 import {
@@ -31,15 +31,17 @@ export class AuthController {
   @Post('logout')
   @HttpCode(HttpStatus.OK)
   public async logout(@Req() req: Request) {
-    const { payload } = req;
+    const { userId } = req;
 
-    await this.authService.logout(payload.sub);
+    await this.authService.logout(userId);
   }
 
   @UseGuards(AuthGuard(process.env.REFRESH_TOKEN_STRATEGY_NAME))
   @Post('refresh-token')
   @HttpCode(HttpStatus.OK)
-  public async refreshTokens() {
-    this.authService.refreshTokens();
+  public async refreshTokens(@Req() req: Request) {
+    const { userId, refreshToken } = req;
+
+    this.authService.refreshTokens(userId, refreshToken);
   }
 }

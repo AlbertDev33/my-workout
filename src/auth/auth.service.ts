@@ -4,7 +4,7 @@ import { EAccessDenied } from '@enums/EAccessDenied';
 import { EInvalidUser } from '@enums/EInvalidUser';
 import { IAuthService } from '@interfaces/IAuthService';
 import { IUserRepository } from '@interfaces/IUserRepository';
-import { hash } from 'bcrypt';
+import { hash, compare } from 'bcrypt';
 
 import { ForbiddenException, Inject, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
@@ -28,7 +28,7 @@ export class AuthService implements IAuthService {
       user.id,
       user.email,
     );
-    const hashToken = await this.updateRefreshToken(refreshToken);
+    const hashToken = await this.hashData(refreshToken);
     const data = {
       userId: user.id,
       hashToken,
@@ -52,8 +52,37 @@ export class AuthService implements IAuthService {
 
     await this.userRepository.updateUser(data);
   }
-  public async refreshTokens(): Promise<void> {
-    throw new Error('Method not implemented.');
+
+  public async refreshTokens(
+    userId: string,
+    userRefreshToken: string,
+  ): Promise<Tokens> {
+    const user = await this.userRepository.getUser(userId);
+
+    if (!user) throw new ForbiddenException(EAccessDenied.MESSAGE_ERROR);
+
+    const isValidRefreshToken = await compare(userRefreshToken, user.hashToken);
+    if (!isValidRefreshToken) {
+      throw new ForbiddenException(EAccessDenied.MESSAGE_ERROR);
+    }
+
+    const { accessToken, refreshToken } = await this.getTokens(
+      user.id,
+      user.email,
+    );
+
+    const hashToken = await this.hashData(userRefreshToken);
+    const data = {
+      userId: user.id,
+      hashToken,
+    };
+
+    await this.userRepository.updateUser(data);
+
+    return {
+      accessToken,
+      refreshToken,
+    };
   }
 
   public async getTokens(userId: string, email: string): Promise<Tokens> {
@@ -88,11 +117,6 @@ export class AuthService implements IAuthService {
 
   private async hashData(data: string): Promise<string> {
     const hashedData = await hash(data, this.HASH_SALT);
-    return hashedData;
-  }
-
-  public async updateRefreshToken(refreshToken: string): Promise<string> {
-    const hashedData = await this.hashData(refreshToken);
     return hashedData;
   }
 }

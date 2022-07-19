@@ -1,9 +1,11 @@
-import { RequestPayload } from '@customTypes/index';
-
+import { CreateUserRequest } from '@interfaces/CreateUserRequest';
 declare global {
   namespace Express {
     interface Request {
-      payload: RequestPayload;
+      userId: string;
+      userData: CreateUserRequest;
+      refreshToken: string;
+      accessToken: string;
     }
   }
 }
