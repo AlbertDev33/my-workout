@@ -5,4 +5,5 @@ export interface IAuthService {
   logout(userId: string): Promise<void>;
   refreshTokens(userId: string, refreshToken: string): Promise<Tokens>;
   getTokens(userId: string, email: string): Promise<Tokens>;
+  hashData(data: string): Promise<string>;
 }

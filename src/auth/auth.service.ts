@@ -115,7 +115,7 @@ export class AuthService implements IAuthService {
     };
   }
 
-  private async hashData(data: string): Promise<string> {
+  public async hashData(data: string): Promise<string> {
     const hashedData = await hash(data, this.HASH_SALT);
     return hashedData;
   }

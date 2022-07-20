@@ -1,4 +1,5 @@
 import { Tokens } from '@customTypes/index';
+import { EAuthGuardStrategyName } from '@enums/EAuthGuardStrategyName';
 import { Request } from 'express';
 
 import {
@@ -27,21 +28,19 @@ export class AuthController {
     return this.authService.signin(smsToken, email);
   }
 
-  @UseGuards(AuthGuard(process.env.ACCESS_TOKEN_STRATEGY_NAME))
+  @UseGuards(AuthGuard(EAuthGuardStrategyName.ACCESS_TOKEN_STRATEGY_NAME))
   @Post('logout')
   @HttpCode(HttpStatus.OK)
   public async logout(@Req() req: Request) {
     const { userId } = req;
-
     await this.authService.logout(userId);
   }
 
-  @UseGuards(AuthGuard(process.env.REFRESH_TOKEN_STRATEGY_NAME))
+  @UseGuards(AuthGuard(EAuthGuardStrategyName.REFRESH_TOKEN_STRATEGY_NAME))
   @Post('refresh-token')
   @HttpCode(HttpStatus.OK)
   public async refreshTokens(@Req() req: Request) {
     const { userId, refreshToken } = req;
-
     this.authService.refreshTokens(userId, refreshToken);
   }
 }

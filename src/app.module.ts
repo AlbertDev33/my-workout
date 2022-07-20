@@ -5,6 +5,7 @@ import { UserModule } from '@modules/user/user.module';
 
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { PassportModule } from '@nestjs/passport';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { AppService } from './app.service';
@@ -21,6 +22,7 @@ import { AuthModule } from './auth/auth.module';
     MailConfigModule,
     EmailModule,
     AuthModule,
+    PassportModule,
   ],
   controllers: [],
   providers: [AppService],

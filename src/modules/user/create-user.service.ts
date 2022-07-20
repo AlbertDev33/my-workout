@@ -31,7 +31,12 @@ export class CreateUserService implements ICreateUserService {
       createdUser.id,
       createdUser.email,
     );
-    await this.authService.updateHashRefreshToken(refreshToken);
+    const userRefreshToken = await this.authService.hashData(refreshToken);
+    const data = {
+      userId: createdUser.id,
+      hashToken: userRefreshToken,
+    };
+    await this.userRepository.updateUser(data);
 
     // await this.sendMailService.execute({
     //   from: process.env.MAIL_FROM,
