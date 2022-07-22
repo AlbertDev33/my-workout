@@ -22,10 +22,9 @@ export class AuthController {
   @Post('signin')
   @HttpCode(HttpStatus.OK)
   public async signin(
-    @Body() smsToken: string,
-    email: string,
+    @Body() body: { smsToken: string; email: string },
   ): Promise<Tokens> {
-    return this.authService.signin(smsToken, email);
+    return this.authService.signin(body.smsToken, body.email);
   }
 
   @UseGuards(AuthGuard(EAuthGuardStrategyName.ACCESS_TOKEN_STRATEGY_NAME))

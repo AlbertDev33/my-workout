@@ -23,10 +23,10 @@ export class User extends BaseEntity {
   @Column({ unique: true })
   email: string;
 
-  @Column({ name: 'confirmed_email', nullable: true })
+  @Column({ name: 'confirmed_email', default: false })
   confirmedEmail: boolean;
 
-  @Column({ name: 'confirmed_phone', nullable: true })
+  @Column({ name: 'confirmed_phone', default: false })
   confirmedPhone: boolean;
 
   @Column({ name: 'phone_number' })
@@ -45,16 +45,21 @@ export class User extends BaseEntity {
   @OneToMany(() => Workout, (workout) => workout.user)
   workout: Workout[];
 
-  @CreateDateColumn({ type: 'time without time zone' })
+  // @CreateDateColumn()
+  @Column()
   created_at: Date;
 
-  @UpdateDateColumn({ type: 'time without time zone' })
+  // @UpdateDateColumn()
+  @Column()
   updated_at: Date;
 
   constructor() {
     super();
-    if (!this.id) {
-      this.id = v4();
+    if (!this.created_at) {
+      this.created_at = new Date();
+    }
+    if (!this.updated_at) {
+      this.updated_at = new Date();
     }
   }
 }

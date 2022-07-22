@@ -22,7 +22,8 @@ export class AuthService implements IAuthService {
   public async signin(smsToken: string, email: string): Promise<Tokens> {
     const user = await this.userRepository.findBySmsToken(smsToken, email);
 
-    if (!user) throw new ForbiddenException(EAccessDenied.MESSAGE_ERROR);
+    if (!user || !user.confirmedEmail)
+      throw new ForbiddenException(EAccessDenied.MESSAGE_ERROR);
 
     const { accessToken, refreshToken } = await this.getTokens(
       user.id,
@@ -86,7 +87,6 @@ export class AuthService implements IAuthService {
   }
 
   public async getTokens(userId: string, email: string): Promise<Tokens> {
-    console.log(userId);
     const [accessToken, refreshToken] = await Promise.all([
       this.jwtService.signAsync(
         {

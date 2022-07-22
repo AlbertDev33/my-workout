@@ -3,7 +3,7 @@ import { IsEmpty, IsOptional } from 'class-validator';
 
 export class UpdateUserData {
   @IsEmpty({ message: `${EInvalidProperty.ERROR_MESSAGE} - userId` })
-  readonly id: string;
+  readonly userId: string;
 
   @IsOptional()
   readonly name: string;

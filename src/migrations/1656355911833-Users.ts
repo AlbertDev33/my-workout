@@ -23,12 +23,12 @@ export class Users1656355911833 implements MigrationInterface {
           {
             name: 'confirmed_email',
             type: 'boolean',
-            isNullable: true,
+            default: false,
           },
           {
             name: 'confirmed_phone',
             type: 'boolean',
-            isNullable: true,
+            default: false,
           },
           {
             name: 'phone_number',
@@ -53,12 +53,10 @@ export class Users1656355911833 implements MigrationInterface {
           {
             name: 'created_at',
             type: 'timestamp',
-            default: 'now()',
           },
           {
             name: 'updated_at',
             type: 'timestamp',
-            default: 'now()',
           },
         ],
       }),

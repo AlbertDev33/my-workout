@@ -29,7 +29,6 @@ export class CreateUserService implements ICreateUserService {
     }
 
     const id = createUUID();
-    console.log(id);
     const { accessToken, refreshToken } = await this.authService.getTokens(
       id,
       user.email,
@@ -43,7 +42,7 @@ export class CreateUserService implements ICreateUserService {
       phoneNumber: user.phoneNumber,
       hashToken,
     };
-    await this.userRepository.create(createdUser);
+    const { userToken } = await this.userRepository.create(createdUser);
 
     // await this.sendMailService.execute({
     //   from: process.env.MAIL_FROM,
