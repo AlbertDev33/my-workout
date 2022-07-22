@@ -86,6 +86,7 @@ export class AuthService implements IAuthService {
   }
 
   public async getTokens(userId: string, email: string): Promise<Tokens> {
+    console.log(userId);
     const [accessToken, refreshToken] = await Promise.all([
       this.jwtService.signAsync(
         {

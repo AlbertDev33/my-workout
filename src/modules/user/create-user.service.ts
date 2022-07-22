@@ -1,10 +1,12 @@
 import { ErrorMessage, InjectDependencies } from '@constants/index';
+import { CreateUserShape } from '@customTypes/create_user_shape.type';
 import { Tokens } from '@customTypes/index';
 import { CreateUserRequest } from '@interfaces/CreateUserRequest';
 import { IAuthService } from '@interfaces/IAuthService';
 import { ICreateUserService } from '@interfaces/ICreateUserService';
 import { ISendMailService } from '@interfaces/ISendMail';
 import { IUserRepository } from '@interfaces/IUserRepository';
+import { v4 as createUUID } from 'uuid';
 
 import { Inject, Injectable } from '@nestjs/common';
 
@@ -26,17 +28,22 @@ export class CreateUserService implements ICreateUserService {
       throw new Error(ErrorMessage.USER_ALREADY_EXIST);
     }
 
-    const createdUser = await this.userRepository.create(user);
+    const id = createUUID();
+    console.log(id);
     const { accessToken, refreshToken } = await this.authService.getTokens(
-      createdUser.id,
-      createdUser.email,
+      id,
+      user.email,
     );
-    const userRefreshToken = await this.authService.hashData(refreshToken);
-    const data = {
-      userId: createdUser.id,
-      hashToken: userRefreshToken,
+    const hashToken = await this.authService.hashData(refreshToken);
+
+    const createdUser: CreateUserShape = {
+      id,
+      name: user.name,
+      email: user.email,
+      phoneNumber: user.phoneNumber,
+      hashToken,
     };
-    await this.userRepository.updateUser(data);
+    await this.userRepository.create(createdUser);
 
     // await this.sendMailService.execute({
     //   from: process.env.MAIL_FROM,

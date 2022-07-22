@@ -21,11 +21,8 @@ export class UserRepository implements IUserRepository {
   }
 
   public async getUser(id: string): Promise<User> {
-    throw new Error('Method not implemented.');
-  }
-
-  public async getWorkout(wokoutId: string[]): Promise<Workout[]> {
-    throw new Error('Method not implemented.');
+    const user = await this.userRepository.findOne({ where: [{ id }] });
+    return user;
   }
 
   public async findByEmail(email: string): Promise<User | undefined> {
@@ -43,9 +40,9 @@ export class UserRepository implements IUserRepository {
   public async updateUser(
     data: Partial<UpdateUserData>,
   ): Promise<UpdateResult> {
-    data.updatedAt = new Date();
+    data.updated_at = new Date();
 
-    const user = await this.userRepository.update(data.userId, { ...data });
+    const user = await this.userRepository.update(data.id, { ...data });
     return user;
   }
 }

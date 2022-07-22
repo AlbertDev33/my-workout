@@ -1,12 +1,16 @@
+import { CustomDataSourceOptions } from '@customTypes/index';
 import { config } from 'dotenv';
 import { DataSource, DataSourceOptions } from 'typeorm';
 config();
 
-type DataSourceCustomType = Pick<DataSource, 'options'>;
+interface DataSourceCustomType
+  extends Omit<Pick<DataSource, 'options'>, 'options'> {
+  options: CustomDataSourceOptions;
+}
 
 const connectionConfig: DataSourceCustomType = {
   options: {
-    type: 'postgres',
+    type: process.env.TYPEORM_DB_TYPE,
     host: process.env.TYPEORM_DB_HOST,
     port: Number(process.env.TYPEORM_DB_PORT),
     username: process.env.TYPEORM_DB_USER_NAME,
@@ -22,8 +26,8 @@ const connectionConfig: DataSourceCustomType = {
 };
 
 export class MigrationsConfig extends DataSource {
-  constructor(options: DataSourceOptions) {
-    super(options);
+  constructor(options: CustomDataSourceOptions) {
+    super(options as DataSourceOptions);
   }
 }
 

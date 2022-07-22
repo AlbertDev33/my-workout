@@ -3,7 +3,7 @@ import { IsEmpty, IsOptional } from 'class-validator';
 
 export class UpdateUserData {
   @IsEmpty({ message: `${EInvalidProperty.ERROR_MESSAGE} - userId` })
-  readonly userId: string;
+  readonly id: string;
 
   @IsOptional()
   readonly name: string;
@@ -18,5 +18,5 @@ export class UpdateUserData {
   readonly hashToken: string;
 
   @IsEmpty({ message: `${EInvalidProperty.ERROR_MESSAGE} - updatedAt` })
-  public updatedAt: Date;
+  public updated_at: Date;
 }
