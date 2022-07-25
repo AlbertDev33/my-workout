@@ -20,7 +20,7 @@ export class UserRepository implements IUserRepository {
     return createdUser;
   }
 
-  public async getUser(id: string): Promise<User> {
+  public async getUser(id: string): Promise<User | null> {
     const user = await this.userRepository.findOne({ where: [{ id }] });
     return user;
   }

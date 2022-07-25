@@ -9,6 +9,7 @@ import { Module } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
+import { ConfirmEmailService } from './confirmEmail.service';
 import { CreateUserService } from './create-user.service';
 import { UserController } from './user.controller';
 import { UserRepository } from './user.repository';
@@ -17,6 +18,7 @@ import { UserRepository } from './user.repository';
   imports: [TypeOrmModule.forFeature([User]), EmailModule, MailConfigModule],
   providers: [
     CreateUserService,
+    ConfirmEmailService,
     JwtService,
     { provide: InjectDependencies.UserRepository, useClass: UserRepository },
     {

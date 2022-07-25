@@ -1,14 +1,11 @@
 import {
   BaseEntity,
   Column,
-  CreateDateColumn,
   Entity,
   Generated,
   OneToMany,
   PrimaryColumn,
-  UpdateDateColumn,
 } from 'typeorm';
-import { v4 } from 'uuid';
 
 import { Workout } from './workout.entity';
 

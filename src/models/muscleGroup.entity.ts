@@ -9,6 +9,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { v4 } from 'uuid';
+
 import { Workout } from './workout.entity';
 
 @Entity('muscle_group')
