@@ -10,6 +10,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
+import { SmsTokenModule } from './modules/sms-token/sms-token.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { AuthModule } from './auth/auth.module';
     EmailModule,
     AuthModule,
     PassportModule,
+    SmsTokenModule,
   ],
   controllers: [],
   providers: [AppService],

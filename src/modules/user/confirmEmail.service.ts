@@ -18,6 +18,6 @@ export class ConfirmEmailService implements IConfirmEmailService {
     if (user?.userToken !== userToken) {
       throw new ForbiddenException(EInvalidToken.MESSAGE_ERROR);
     }
-    console.log(user);
+    await this.userRepository.updateUser({ userId, confirmedEmail: true });
   }
 }

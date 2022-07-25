@@ -22,7 +22,7 @@ export class AuthService implements IAuthService {
   public async signin(smsToken: string, email: string): Promise<Tokens> {
     const user = await this.userRepository.findBySmsToken(smsToken, email);
 
-    if (!user || !user.confirmedEmail)
+    if (!user?.confirmedEmail)
       throw new ForbiddenException(EAccessDenied.MESSAGE_ERROR);
 
     const { accessToken, refreshToken } = await this.getTokens(

@@ -17,6 +17,12 @@ export class UpdateUserData {
   @IsOptional()
   readonly hashToken: string;
 
+  @IsOptional()
+  readonly userToken: string;
+
+  @IsOptional()
+  readonly confirmedEmail: boolean;
+
   @IsEmpty({ message: `${EInvalidProperty.ERROR_MESSAGE} - updatedAt` })
   public updated_at: Date;
 }

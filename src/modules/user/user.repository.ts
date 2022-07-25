@@ -41,8 +41,11 @@ export class UserRepository implements IUserRepository {
     data: Partial<UpdateUserData>,
   ): Promise<UpdateResult> {
     data.updated_at = new Date();
-    const { userId, ...rest } = data;
-    const user = await this.userRepository.update({ id: userId }, { ...rest });
+    const { userId, ...restProps } = data;
+    const user = await this.userRepository.update(
+      { id: userId },
+      { ...restProps },
+    );
     return user;
   }
 }
