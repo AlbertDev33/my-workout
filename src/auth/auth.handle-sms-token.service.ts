@@ -29,7 +29,7 @@ export class AuthHandleSmsTokenService implements IAuthHandleSmsTokenService {
 
     if (!user?.confirmedEmail)
       throw new BadRequestException(EInvalidUser.MESSAGE_ERROR);
-    console.log(phoneNumber);
+
     const smsToken = await this.makeSmsToken.makeSmsToken();
     await this.saveSmsToken.saveToken(user.id, smsToken);
     await this.sendSmsToken.sendToken(phoneNumber, smsToken);
