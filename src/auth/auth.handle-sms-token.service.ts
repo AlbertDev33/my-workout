@@ -1,11 +1,12 @@
 import { InjectDependencies } from '@constants/index';
+import { EInvalidUser } from '@enums/EInvalidUser';
 import { IAuthHandleSmsTokenService } from '@interfaces/IAuthHandleSmsTokenService';
 import { IMakeSmsTokenService } from '@interfaces/IMakeSmsTokenService';
 import { ISaveSmsTokenService } from '@interfaces/ISaveSmsTokenService';
 import { ISendSmsTokenService } from '@interfaces/ISendSmsTokenService';
 import { IUserRepository } from '@interfaces/IUserRepository';
 
-import { Inject, Injectable } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 
 @Injectable()
 export class AuthHandleSmsTokenService implements IAuthHandleSmsTokenService {
@@ -24,6 +25,13 @@ export class AuthHandleSmsTokenService implements IAuthHandleSmsTokenService {
     email: string,
     phoneNumber: string,
   ): Promise<void> {
-    throw new Error('Method not implemented.');
+    const user = await this.userRepository.findByEmail(email);
+
+    if (!user?.confirmedEmail)
+      throw new BadRequestException(EInvalidUser.MESSAGE_ERROR);
+    console.log(phoneNumber);
+    const smsToken = await this.makeSmsToken.makeSmsToken();
+    await this.saveSmsToken.saveToken(user.id, smsToken);
+    await this.sendSmsToken.sendToken(phoneNumber, smsToken);
   }
 }

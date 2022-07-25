@@ -1,3 +1,3 @@
 export interface ISaveSmsTokenService {
-  saveToken(email: string, smsToken: string): Promise<void>;
+  saveToken(userId: string, smsToken: string): Promise<void>;
 }

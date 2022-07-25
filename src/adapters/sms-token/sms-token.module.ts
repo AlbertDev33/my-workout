@@ -18,6 +18,11 @@ import { SendSmsTokenService } from './send-sms-token.service';
     SendSmsTokenService,
     { provide: InjectDependencies.UserRepository, useClass: UserRepository },
   ],
-  exports: [SendSmsTokenService, MakeSmsTokenService, SaveSmsTokenService],
+  exports: [
+    SendSmsTokenService,
+    MakeSmsTokenService,
+    SaveSmsTokenService,
+    AwsSdkModule,
+  ],
 })
 export class SmsTokenModule {}

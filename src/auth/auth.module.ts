@@ -12,6 +12,7 @@ import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 
 import { AuthController } from './auth.controller';
+import { AuthHandleSmsTokenService } from './auth.handle-sms-token.service';
 import { AuthService } from './auth.service';
 import { AccessTokenStrategy } from './strategies/accessToken.strategy';
 import { RefreshTokenStrategy } from './strategies/refreshToken.strategy';
@@ -23,6 +24,7 @@ import { RefreshTokenStrategy } from './strategies/refreshToken.strategy';
     AuthService,
     AccessTokenStrategy,
     RefreshTokenStrategy,
+    AuthHandleSmsTokenService,
     { provide: InjectDependencies.UserRepository, useClass: UserRepository },
     {
       provide: InjectDependencies.MakeSmsTokenService,

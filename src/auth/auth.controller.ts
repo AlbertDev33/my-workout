@@ -5,6 +5,7 @@ import { Request } from 'express';
 import {
   Body,
   Controller,
+  Get,
   HttpCode,
   HttpStatus,
   Post,
@@ -13,11 +14,15 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 
+import { AuthHandleSmsTokenService } from './auth.handle-sms-token.service';
 import { AuthService } from './auth.service';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly authHandleSmsToken: AuthHandleSmsTokenService,
+  ) {}
 
   @Post('signin')
   @HttpCode(HttpStatus.OK)
@@ -25,6 +30,14 @@ export class AuthController {
     @Body() body: { smsToken: string; email: string },
   ): Promise<Tokens> {
     return this.authService.signin(body.smsToken, body.email);
+  }
+
+  @Get('send-token')
+  @HttpCode(HttpStatus.OK)
+  public async handleSmsToken(@Req() req: Request): Promise<void> {
+    const phoneNumber = req.headers.phonenumber as string;
+    const email = req.headers.email as string;
+    await this.authHandleSmsToken.handleSmsToken(email, phoneNumber);
   }
 
   @UseGuards(AuthGuard(EAuthGuardStrategyName.ACCESS_TOKEN_STRATEGY_NAME))
