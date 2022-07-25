@@ -1,5 +1,8 @@
 import { IMakeSmsTokenService } from '@interfaces/IMakeSmsTokenService';
 
+import { Injectable } from '@nestjs/common';
+
+@Injectable()
 export class MakeSmsTokenService implements IMakeSmsTokenService {
   public async makeSmsToken(): Promise<string> {
     const smsToken = new Promise<string>((resolve) => {

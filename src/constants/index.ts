@@ -5,6 +5,9 @@ export enum InjectDependencies {
   CreateUserService = 'ICreateUserService',
   UserRepository = 'IUserRepository',
   AuthService = 'IAuthService',
+  MakeSmsTokenService = 'IMakeSmsTokenService',
+  SaveSmsTokenService = 'ISaveSmsTokenService',
+  SendSmsTokenService = 'ISendSmsTokenService',
 }
 
 export enum ErrorMessage {

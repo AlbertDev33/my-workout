@@ -1,6 +1,5 @@
 import { UpdateUserData } from '@interfaces/IUpdateUserData';
 import { User } from '@models/user.entity';
-import { Workout } from '@models/workout.entity';
 import { CreateUserRequest } from 'interfaces/CreateUserRequest';
 import { IUserRepository } from 'interfaces/IUserRepository';
 import { Repository, UpdateResult } from 'typeorm';

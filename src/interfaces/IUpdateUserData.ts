@@ -21,6 +21,9 @@ export class UpdateUserData {
   readonly userToken: string;
 
   @IsOptional()
+  readonly smsToken: string;
+
+  @IsOptional()
   readonly confirmedEmail: boolean;
 
   @IsEmpty({ message: `${EInvalidProperty.ERROR_MESSAGE} - updatedAt` })

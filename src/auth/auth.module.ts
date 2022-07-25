@@ -1,3 +1,9 @@
+import {
+  MakeSmsTokenService,
+  SaveSmsTokenService,
+  SendSmsTokenService,
+  SmsTokenModule,
+} from '@adapters/sms-token/index';
 import { InjectDependencies } from '@constants/index';
 import { UserModule } from '@modules/user/user.module';
 import { UserRepository } from '@modules/user/user.repository';
@@ -11,13 +17,25 @@ import { AccessTokenStrategy } from './strategies/accessToken.strategy';
 import { RefreshTokenStrategy } from './strategies/refreshToken.strategy';
 
 @Module({
-  imports: [JwtModule.register({}), UserModule],
+  imports: [JwtModule.register({}), UserModule, SmsTokenModule],
   controllers: [AuthController],
   providers: [
     AuthService,
     AccessTokenStrategy,
     RefreshTokenStrategy,
     { provide: InjectDependencies.UserRepository, useClass: UserRepository },
+    {
+      provide: InjectDependencies.MakeSmsTokenService,
+      useClass: MakeSmsTokenService,
+    },
+    {
+      provide: InjectDependencies.SaveSmsTokenService,
+      useClass: SaveSmsTokenService,
+    },
+    {
+      provide: InjectDependencies.SendSmsTokenService,
+      useClass: SendSmsTokenService,
+    },
   ],
 })
 export class AuthModule {}

@@ -1,3 +1,3 @@
 export interface IMakeSmsTokenService {
-  makeSmsToken(): Promise<string>;
+  makeSmsToken(email: string, phoneNumber: string): Promise<string>;
 }

@@ -40,6 +40,9 @@
       ],
       "@enums/*": [
         "enums/*"
+      ],
+      "@adapters/*": [
+        "adapters/*"
       ]
     }
   }
