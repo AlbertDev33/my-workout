@@ -35,8 +35,8 @@ export class AuthController {
   @Get('send-token')
   @HttpCode(HttpStatus.OK)
   public async handleSmsToken(@Req() req: Request): Promise<void> {
-    const phoneNumber = req.headers.phonenumber as string;
-    const email = req.headers.email as string;
+    const phoneNumber = req.headers.phonenumber;
+    const { email } = req.headers;
     await this.authHandleSmsToken.handleSmsToken(email, phoneNumber);
   }
 

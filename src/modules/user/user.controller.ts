@@ -33,8 +33,8 @@ export class UserController {
   @Get()
   @HttpCode(HttpStatus.OK)
   public async confirmUserEmail(@Req() req: Request) {
-    const userId = req.headers.userid as string;
-    const userToken = req.headers.usertoken as string;
+    const userId = req.headers.userid;
+    const userToken = req.headers.usertoken;
     await this.confirmEmail.execute(userId, userToken);
   }
 }
