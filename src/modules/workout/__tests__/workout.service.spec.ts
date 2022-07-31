@@ -1,3 +1,4 @@
+import { CreateIdService } from '@adapters/create-id/create-id.service';
 import { connection } from '@configs/typeorm.tests';
 import { CreateUserShape } from '@customTypes/index';
 import { ICreateWorkoutService } from '@interfaces/ICreateWorkoutService';
@@ -6,7 +7,7 @@ import { IWorkoutRepository } from '@interfaces/IWorkoutRepository';
 import { User } from '@models/user.entity';
 import { Workout } from '@models/workout.entity';
 import { UserRepository } from '@modules/user/user.repository';
-import { Repository } from 'typeorm';
+import { EntityTarget, ObjectLiteral, Repository } from 'typeorm';
 import { v4 } from 'uuid';
 
 import { CreateWorkoutService } from '../create-workout.service';
@@ -18,16 +19,17 @@ type SutType = {
   userRepository: IUserRepository;
 };
 
+const entitys = <T>(entity: EntityTarget<T>) => {
+  return connection.repository().getRepository<T>(entity);
+};
+
 const makeSut = (): SutType => {
-  const repositoryWorkout: Repository<Workout> = connection
-    .repository()
-    .getRepository(Workout);
-  const repositoryUser: Repository<User> = connection
-    .repository()
-    .getRepository(User);
+  const repositoryWorkout: Repository<Workout> = entitys(Workout);
+  const repositoryUser: Repository<User> = entitys(User);
   const userRepository = new UserRepository(repositoryUser);
   const workoutRepository = new WorkoutRepository(repositoryWorkout);
-  const sut = new CreateWorkoutService(workoutRepository);
+  const createId = new CreateIdService();
+  const sut = new CreateWorkoutService(createId, workoutRepository);
 
   return {
     sut,
@@ -54,6 +56,9 @@ describe('WorkoutService', () => {
 
   afterAll(async () => {
     await connection.close();
+  });
+
+  afterAll(async () => {
     await connection.drop();
   });
 
