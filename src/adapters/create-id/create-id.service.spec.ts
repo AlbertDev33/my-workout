@@ -19,7 +19,7 @@ describe('CreateIdService', () => {
   it('should be return a valid uuid', () => {
     const { sut } = makeStub();
 
-    const fakeSut = sut.createId();
+    const fakeSut = sut.create();
     const isValidUUID = validate(fakeSut);
     expect(isValidUUID).toBe(true);
   });

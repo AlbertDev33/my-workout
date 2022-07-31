@@ -1,3 +1,4 @@
+import { CreateIdService } from '@adapters/create-id/create-id.service';
 import { InjectDependencies } from '@constants/index';
 import { User } from '@models/user.entity';
 import { EmailModule } from '@modules/email/email.module';
@@ -27,6 +28,7 @@ import { UserRepository } from './user.repository';
     },
     { provide: InjectDependencies.SendMailService, useClass: SendMailService },
     { provide: InjectDependencies.AuthService, useClass: AuthService },
+    { provide: InjectDependencies.CreateIdService, useClass: CreateIdService },
   ],
   controllers: [UserController],
   exports: [CreateUserService, TypeOrmModule],

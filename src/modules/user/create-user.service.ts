@@ -3,10 +3,10 @@ import { CreateUserShape } from '@customTypes/create_user_shape.type';
 import { Tokens } from '@customTypes/index';
 import { CreateUserRequest } from '@interfaces/CreateUserRequest';
 import { IAuthService } from '@interfaces/IAuthService';
+import { ICreateIdService } from '@interfaces/ICreateIdService';
 import { ICreateUserService } from '@interfaces/ICreateUserService';
 import { ISendMailService } from '@interfaces/ISendMail';
 import { IUserRepository } from '@interfaces/IUserRepository';
-import { v4 as createUUID } from 'uuid';
 
 import { Inject, Injectable } from '@nestjs/common';
 
@@ -19,6 +19,8 @@ export class CreateUserService implements ICreateUserService {
     private readonly sendMailService: ISendMailService,
     @Inject(InjectDependencies.AuthService)
     private readonly authService: IAuthService,
+    @Inject(InjectDependencies.CreateIdService)
+    private readonly createId: ICreateIdService,
   ) {}
 
   public async execute(user: CreateUserRequest): Promise<Tokens> {
@@ -28,7 +30,7 @@ export class CreateUserService implements ICreateUserService {
       throw new Error(ErrorMessage.USER_ALREADY_EXIST);
     }
 
-    const id = createUUID();
+    const id = this.createId.create();
     const { accessToken, refreshToken } = await this.authService.getTokens(
       id,
       user.email,

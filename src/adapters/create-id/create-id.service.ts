@@ -5,7 +5,7 @@ import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class CreateIdService implements ICreateIdService {
-  public createId(): string {
+  public create(): string {
     const generatedId = v4();
     return generatedId;
   }

@@ -1,15 +1,12 @@
 import {
   BaseEntity,
   Column,
-  CreateDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
   OneToMany,
   PrimaryColumn,
-  UpdateDateColumn,
 } from 'typeorm';
-import { v4 } from 'uuid';
 
 import { MuscleGroup } from './muscleGroup.entity';
 import { User } from './user.entity';
@@ -35,16 +32,19 @@ export class Workout extends BaseEntity {
   @OneToMany(() => MuscleGroup, (muscleGroup) => muscleGroup.workout)
   muscleGroup: MuscleGroup[];
 
-  @CreateDateColumn({ type: 'time without time zone' })
-  created_at: Date;
+  @Column({ name: 'created_at' })
+  createdAt: Date;
 
-  @UpdateDateColumn({ type: 'time without time zone' })
-  updated_at: Date;
+  @Column({ name: 'updated_at' })
+  updatedAt: Date;
 
   constructor() {
     super();
-    if (!this.id) {
-      this.id = v4();
+    if (!this.createdAt) {
+      this.createdAt = new Date();
+    }
+    if (!this.updatedAt) {
+      this.updatedAt = new Date();
     }
   }
 }
