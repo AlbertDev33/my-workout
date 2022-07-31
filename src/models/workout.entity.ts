@@ -12,7 +12,6 @@ import {
 import { v4 } from 'uuid';
 
 import { MuscleGroup } from './muscleGroup.entity';
-
 import { User } from './user.entity';
 
 @Entity('workout')

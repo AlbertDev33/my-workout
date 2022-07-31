@@ -12,6 +12,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { SmsTokenModule } from './adapters/sms-token/sms-token.module';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
+import { WorkoutModule } from './modules/workout/workout.module';
+import { CreateIdModule } from './adapters/create-id/create-id.module';
 
 @Module({
   imports: [
@@ -37,6 +39,8 @@ import { AuthModule } from './auth/auth.module';
     AuthModule,
     PassportModule,
     SmsTokenModule,
+    WorkoutModule,
+    CreateIdModule,
   ],
   controllers: [],
   providers: [AppService],
