@@ -30,11 +30,9 @@ export class AuthService implements IAuthService {
       user.email,
     );
     const hashToken = await this.hashData(refreshToken);
-    const data = {
-      userId: user.id,
-      hashToken,
-    };
-    await this.userRepository.updateUser(data);
+    new Promise((resolve) =>
+      resolve(this.userRepository.updateUser({ userId: user.id, hashToken })),
+    );
 
     return {
       accessToken,
@@ -45,13 +43,7 @@ export class AuthService implements IAuthService {
     const user = await this.userRepository.getUser(userId);
 
     if (!user) throw new ForbiddenException(EInvalidUser.MESSAGE_ERROR);
-
-    const data = {
-      userId: user.id,
-      hashToken: '',
-    };
-
-    await this.userRepository.updateUser(data);
+    await this.userRepository.updateUser({ userId: user.id, hashToken: '' });
   }
 
   public async refreshTokens(
@@ -73,12 +65,7 @@ export class AuthService implements IAuthService {
     );
 
     const hashToken = await this.hashData(userRefreshToken);
-    const data = {
-      userId: user.id,
-      hashToken,
-    };
-
-    await this.userRepository.updateUser(data);
+    await this.userRepository.updateUser({ userId: user.id, hashToken });
 
     return {
       accessToken,

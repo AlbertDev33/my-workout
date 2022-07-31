@@ -29,7 +29,10 @@ export class UserRepository implements IUserRepository {
     return user;
   }
 
-  public async findBySmsToken(smsToken: string, email: string): Promise<User> {
+  public async findBySmsToken(
+    smsToken: string,
+    email: string,
+  ): Promise<User | undefined> {
     const user = await this.userRepository.findOne({
       where: [{ smsToken, email }],
     });
