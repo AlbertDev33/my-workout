@@ -1,14 +1,21 @@
+import { CreateIdService } from '@adapters/create-id/create-id.service';
+import { AuthService } from '@auth/auth.service';
 import { connection } from '@configs/typeorm.tests';
+import { Tokens } from '@customTypes/tokens.type';
 import { ICreateUserService } from '@interfaces/ICreateUserService';
 import { User } from '@models/user.entity';
 import { SendMailService } from '@modules/email/sendMail.service';
 import { MailService } from '@modules/mailConfig/mail.service';
 import { Repository } from 'typeorm';
-import { validate } from 'uuid';
+
+import { JwtService } from '@nestjs/jwt';
 
 import { CreateUserService } from '../create-user.service';
 import { UserRepository } from '../user.repository';
 import { validUser } from './constants/index';
+
+process.env.ACCESS_TOKEN_SECRET = 'secret';
+process.env.REFRESH_TOKEN_SECRET = 'secret';
 
 type SutType = {
   stub: ICreateUserService;
@@ -24,7 +31,15 @@ const makeSut = (): SutType => {
   } as any;
   const sendMailService = new SendMailService(mailService);
   const userRepositoryStub = new UserRepository(repositoryUser);
-  const stub = new CreateUserService(userRepositoryStub, sendMailService);
+  const jwtServie = new JwtService();
+  const authService = new AuthService(jwtServie, userRepositoryStub);
+  const createId = new CreateIdService();
+  const stub = new CreateUserService(
+    userRepositoryStub,
+    sendMailService,
+    authService,
+    createId,
+  );
 
   return {
     stub,
@@ -32,12 +47,12 @@ const makeSut = (): SutType => {
 };
 
 describe('User Repository', () => {
-  let createdUser: User;
+  let tokens: Tokens;
   beforeAll(async () => {
     await connection.crateDatabase();
     await connection.createConnection();
     const { stub } = makeSut();
-    createdUser = await stub.execute(validUser);
+    tokens = await stub.execute(validUser);
   });
 
   afterAll(async () => {
@@ -48,11 +63,11 @@ describe('User Repository', () => {
     await connection.drop();
   });
 
-  it('should create a valid user', async () => {
-    const isValidUUID = validate(createdUser.id);
-
-    expect(createdUser).toHaveProperty('id');
-    expect(isValidUUID).toBe(true);
+  it('should return access and refresh tokens', async () => {
+    expect(tokens).toHaveProperty('accessToken');
+    expect(tokens).toHaveProperty('refreshToken');
+    expect(typeof tokens.accessToken).toBe('string');
+    expect(typeof tokens.refreshToken).toBe('string');
   });
 
   it('should throw if user already existing', async () => {

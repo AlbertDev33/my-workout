@@ -16,10 +16,10 @@ export class Workout extends BaseEntity {
   @PrimaryColumn()
   id?: string;
 
-  @Column({ type: 'time without time zone' })
+  @Column()
   date: Date;
 
-  @Column({ name: 'workout_time' })
+  @Column({ name: 'workout_time', nullable: true })
   workoutTime: string;
 
   @ManyToOne(() => User)

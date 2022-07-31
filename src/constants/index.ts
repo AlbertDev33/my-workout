@@ -9,6 +9,7 @@ export enum InjectDependencies {
   SaveSmsTokenService = 'ISaveSmsTokenService',
   SendSmsTokenService = 'ISendSmsTokenService',
   CreateIdService = 'ICreateIdService',
+  WorkoutRepository = 'IWorkoutRepository',
 }
 
 export enum ErrorMessage {

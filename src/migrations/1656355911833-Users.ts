@@ -44,6 +44,7 @@ export class Users1656355911833 implements MigrationInterface {
             name: 'hash_token',
             type: 'varchar',
             isNullable: true,
+            isUnique: true,
           },
           {
             name: 'sms_token',

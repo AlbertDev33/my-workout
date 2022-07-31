@@ -22,16 +22,15 @@ export class createWorkout1656424762191 implements MigrationInterface {
           {
             name: 'workout_time',
             type: 'varchar',
+            isNullable: true,
           },
           {
             name: 'created_at',
             type: 'timestamp',
-            default: 'now()',
           },
           {
             name: 'updated_at',
             type: 'timestamp',
-            default: 'now()',
           },
         ],
         foreignKeys: [

@@ -43,6 +43,9 @@
       ],
       "@adapters/*": [
         "adapters/*"
+      ],
+      "@auth/*": [
+        "auth/*"
       ]
     }
   }
