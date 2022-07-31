@@ -1,6 +1,6 @@
+import { CreateUserShape } from '@customTypes/index';
 import { UpdateUserData } from '@interfaces/IUpdateUserData';
 import { User } from '@models/user.entity';
-import { CreateUserRequest } from 'interfaces/CreateUserRequest';
 import { IUserRepository } from 'interfaces/IUserRepository';
 import { Repository, UpdateResult } from 'typeorm';
 
@@ -13,7 +13,7 @@ export class UserRepository implements IUserRepository {
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
   ) {}
-  public async create(user: CreateUserRequest): Promise<User> {
+  public async create(user: CreateUserShape): Promise<User> {
     const register = this.userRepository.create(user);
     const createdUser = await this.userRepository.save(register);
     return createdUser;
